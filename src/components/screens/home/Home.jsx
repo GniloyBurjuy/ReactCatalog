@@ -1,18 +1,25 @@
-import styles from './Home.module.css'
+import {useState} from 'react'
+import CarItem from "./car-item/Caritem";
+import {cars as carsData} from "./cars.data.js";
+import CreateCarForm from "./create-car-form/CreateCarForm";
+
 
 function Home() {
-    return (
-        <div>
-          <h1>Cars catalog</h1>
-          <div>
-            <div className={styles.item}>
-                <h2>Car 1</h2>
-                <p>$100 000</p>
-                <button>Read more</button>
-            </div>
-          </div>
-        </div>
-    )
-  }
-  
-  export default Home
+  const [cars, setCars] = useState(carsData);
+
+  return (
+    <div>
+      <h1>Cars catalog</h1>
+      <CreateCarForm setCars={setCars} />
+      <div>
+        {cars.length ? (
+          cars.map((car) => <CarItem key={car.id} car={car} />)
+        ) : (
+          <p>There are no cars</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default Home;
